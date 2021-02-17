@@ -130,6 +130,28 @@ public class HibernateDishesDAOTest {
     }
 
     @Test
+    public void addIngredientShouldAddIngredientToLoadedDish() {
+        Dish dish = new Dish();
+        dish.setName("name");
+
+        IngredientPortion ingredientPortion1 = generateIngredientPortion(1, 500, dish);
+        dish.addIngredient(ingredientPortion1);
+
+        dishesDAO.save(dish);
+
+        dish = (Dish)dishesDAO.show(dish.getId());
+        IngredientPortion ingredientPortion2 = generateIngredientPortion(2, 300, dish);
+        dishesDAO.addIngredient(dish.getId(), ingredientPortion2);
+
+        Dish dish1 = (Dish) dishesDAO.show(dish.getId());
+        IngredientPortion ingredientPortion = dish1.getIngredientByIngredientId(ingredientPortion2.getIngredientId());
+
+        Assert.assertEquals(ingredientPortion2, ingredientPortion);
+
+        dishesDAO.delete(dish.getId());
+    }
+
+    @Test
     public void showPortionShouldReturnCorrectIngredientPortion() {
         Dish dish = new Dish();
         dish.setName("name");

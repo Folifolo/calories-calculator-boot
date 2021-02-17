@@ -52,6 +52,8 @@ public class HibernateDishesDAO implements DishesDAO{
         session.beginTransaction();
         Dish dish = session.load(Dish.class, id);
         dish.addIngredient(ingredientPortion);
+        session.save(ingredientPortion);
+        session.update(dish);
         session.getTransaction().commit();
         session.close();
     }

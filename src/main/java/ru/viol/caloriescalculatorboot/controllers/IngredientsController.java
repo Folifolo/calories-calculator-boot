@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import ru.viol.caloriescalculatorboot.dao.IngredientsDAO;
 import ru.viol.caloriescalculatorboot.models.Ingredient;
 
@@ -24,44 +25,54 @@ public class IngredientsController {
     }
 
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("ingredients", ingredientsDAO.index());
-        return "ingredients/index";
+    public ModelAndView index() {
+        ModelAndView modelAndView = new ModelAndView("ingredients/index");
+        modelAndView.addObject("ingredients", ingredientsDAO.index());
+        return modelAndView;
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("ingredient", ingredientsDAO.show(id));
-        return "ingredients/show";
+    public ModelAndView show(@PathVariable("id") int id) {
+        ModelAndView modelAndView = new ModelAndView("ingredients/show");
+        modelAndView.addObject("ingredient", ingredientsDAO.show(id));
+        return modelAndView;
     }
 
     @GetMapping("/new")
-    public String newIngredient(@ModelAttribute("ingredient") Ingredient ingredient) {
-        return "ingredients/new";
+    public ModelAndView newIngredient(@ModelAttribute("ingredient") Ingredient ingredient) {
+        ModelAndView modelAndView = new ModelAndView("ingredients/new");
+        return modelAndView;
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("ingredient") @Valid Ingredient ingredient,
+    public ModelAndView create(@ModelAttribute("ingredient") @Valid Ingredient ingredient,
                          BindingResult bindingResult) {
-        if(bindingResult.hasErrors())
-            return "ingredients/new";
+        ModelAndView modelAndView = new ModelAndView("redirect:/ingredients");
+        if(bindingResult.hasErrors()) {
+            modelAndView.setViewName("ingredients/new");
+            return modelAndView;
+        }
         ingredientsDAO.save(ingredient);
-        return "redirect:/ingredients";
+        return modelAndView;
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("ingredient") @Valid Ingredient ingredient,
+    public ModelAndView update(@ModelAttribute("ingredient") @Valid Ingredient ingredient,
                          BindingResult bindingResult, @PathVariable("id") int id) {
-        if(bindingResult.hasErrors())
-            return "ingredients/{id}";
+        ModelAndView modelAndView = new ModelAndView("redirect:/ingredients");
+        if(bindingResult.hasErrors()) {
+            modelAndView.setViewName("ingredients/" + id);
+            return modelAndView;
+        }
         ingredientsDAO.update(id, ingredient);
-        return "redirect:/ingredients";
+        return modelAndView;
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id) {
+    public ModelAndView delete(@PathVariable("id") int id) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/ingredients");
         ingredientsDAO.delete(id);
-        return "redirect:/ingredients";
+        return modelAndView;
     }
 
 
