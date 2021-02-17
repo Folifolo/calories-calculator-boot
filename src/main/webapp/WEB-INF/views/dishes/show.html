@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show</title>
+</head>
+<body>
+
+<p th:text="${dish.getName() + ', ' + dish.getCalories() + ' ккал'}">VALUE</p>
+
+<form th:method="PATCH" th:action="@{/dishes/temp}" th:object="${dish}">
+    <table class="table">
+        <tbody>
+        <tr th:each="ingredientPortion, rowStat  : ${dish.getIngredients()}">
+            <td>
+                <a th:href="@{/ingredients/{id}(id=${ingredientPortion.getIngredientId()})}"
+                       th:text="${ingredientPortion.getName()}">value</a>
+            </td>
+            <td >
+                <label for="ingredient_weight"></label>
+                <input type="text" th:field="*{ingredients[__${rowStat.index}__].weight}" id="ingredient_weight" name="weight" size="4">
+            </td>
+            <td>
+                <p th:text="' гр., ' + ${ingredientPortion.getCalories()} + ' ккал'">cal</p>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+    <input type="submit" value="Применить локально">
+</form>
+
+<form th:method="GET" th:action="@{/dishes/{id}/update(id=${dish.getId()})}">
+    <input type="submit" value="Изменить">
+</form>
+
+
+</body>
+</html>

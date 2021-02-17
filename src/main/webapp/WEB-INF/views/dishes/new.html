@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Новое блюдо</title>
+</head>
+<body>
+
+
+<form th:method="POST" th:action="@{/dishes/temp/ingredient}" th:object="${ingredientPortion}">
+    <label for="ingredient_type">Добавить ингредиент: </label>
+    <select id = ingredient_type name="ingredient_type" th:field="*{ingredient.id}">
+        <option th:each="ingredient_type : ${ingredients} "
+                th:value="${ingredient_type.getId()}"
+                th:text="${ingredient_type.getName()}"
+        >ingredient</option>
+    </select>
+
+    <label for="weight">Weight: </label>
+    <input type="text" th:field="*{weight}" id="weight">
+
+    <input type="submit" value="Добавить">
+</form>
+
+<form th:method="POST" th:action="@{/dishes}" th:object="${dish}">
+    <label for="name">Название </label>
+    <input type="text" th:field="*{name}" id="name" name="name">
+
+    <table class="table">
+        <tbody>
+        <tr th:each="ingredientPortion, rowStat  : ${dish.getIngredients()}">
+            <td>
+                <p th:text="${ingredientPortion.getName()}">nm</p>
+            </td>
+            <td >
+                <label for="ingredient_weight"></label>
+                <input type="text" th:field="*{ingredients[__${rowStat.index}__].weight}" id="ingredient_weight" name="weight" size="4">
+            </td>
+            <td>
+                <p th:text="' гр., ' + ${ingredientPortion.getCalories()} + ' ккал'">cal</p>
+            </td>
+            <td>
+                <input type="hidden" th:field="*{ingredients[__${rowStat.index}__].ingredient.id}" />
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+
+    <input type="submit" value="Создать">
+</form>
+
+
+</body>
+</html>

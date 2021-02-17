@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список ингредиентов</title>
+</head>
+<body>
+<div th:each="ingredient : ${ingredients}">
+    <a th:href="@{/ingredients/{id}(id=${ingredient.getId()})}"
+       th:text="${ingredient.getName()} + ', ' + ${ingredient.getCalories()} + ' ккал'">value</a>
+</div>
+
+<br/>
+
+<a href="/ingredients/new" >Добавить новый ингредиент</a>
+
+<br/>
+
+<a href="/main" >Вернуться на главную</a>
+
+
+</body>
+</html>

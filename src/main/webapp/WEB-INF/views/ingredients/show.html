@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show</title>
+</head>
+<body>
+
+<form th:method="PATCH" th:action="@{/ingredients/{id}(id=${ingredient.getId()})}" th:object="${ingredient}">
+    <label for="name">Название: </label>
+    <input type="text" th:field="*{name}" id="name">
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+
+    <br/>
+
+    <label for="calories">Калорийность, ккал: </label>
+    <input type="text" th:field="*{calories}" id="calories">
+    <div style="color:red" th:if="${#fields.hasErrors('calories')}" th:errors="*{calories}">Calories error</div>
+
+    <input type="submit" value="Сохранить изменения!">
+</form>
+
+<br/>
+
+<form th:method="DELETE" th:action="@{/ingredients/{id}(id=${ingredient.getId()})}">
+    <input type="submit" value="Удалить"/>
+</form>
+</body>
+</html>

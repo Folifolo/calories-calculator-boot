@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Изменить1</title>
+</head>
+<body>
+
+    <form id="updateform" th:method="PATCH" th:action="@{/dishes/{id}(id=${dish.getId()})}" th:object="${dish}">
+    <label for="name">Название: </label>
+    <input type="text" th:field="*{name}" id="name" name="name">
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+    <input type="submit" value="Сохранить" form="updateform">
+    </form>
+
+    <table class="table">
+        <tbody>
+        <tr th:each="ingredientPortion, rowStat  : ${dish.getIngredients()}">
+            <td>
+                <p th:text="${ingredientPortion.getName()}">nm</p>
+            </td>
+            <td>
+                <form th:method="PATCH" th:action="@{/dishes/{id}/ingredient(id=${dish.getId()})}"
+                      th:object="${ingredientPortion}">
+                    <label for="ingredient_weight"></label>
+                    <input type="text" th:value="*{weight}" id="ingredient_weight" name="weight" size="4">
+
+                    <input type="hidden" th:value="*{ingredient.id}" name="ingredient.id" />
+                    <input type="submit" value="Изменить">
+                </form>
+            </td>
+            <td>
+                <p th:text="', ' + ${ingredientPortion.getCalories()} + ' ккал'">cal</p>
+            </td>
+
+            <td>
+                <form th:method="DELETE" th:action="@{/dishes/{did}/{iid}(did=${dish.getId()}, iid=${ingredientPortion.getIngredientId()})}">
+                    <input type="submit" value="Удалить">
+                </form>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+
+
+
+<form th:method="POST" th:action="@{/dishes/{id}/ingredient(id=${dish.getId()})}" th:object="${ingredientPortion}">
+    <label for="ingredient_type">Добавить ингредиент: </label>
+    <select id = ingredient_type name="ingredient_type" th:field="*{ingredient.id}">
+        <option th:each="ingredient_type : ${ingredients} "
+                th:value="${ingredient_type.getId()}"
+                th:text="${ingredient_type.getName()}"
+        >ingredient</option>
+    </select>
+
+    <label for="weight">Вес, гр.: </label>
+    <input type="text" th:field="*{weight}" id="weight">
+
+
+    <input type="submit" value="Добавить ингредиент">
+</form>
+
+<br/>
+
+<form th:method="DELETE" th:action="@{/dishes/{id}(id=${dish.getId()})}">
+    <input type="submit" value="Удалить блюдо">
+</form>
+
+<br/>
+
+<a href="/dishes" >К списку блюд</a>
+
+</body>
+</html>

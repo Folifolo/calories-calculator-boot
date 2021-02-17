@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Новый ингредиент</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/ingredients}" th:object="${ingredient}">
+    <label for="name">Название: </label>
+    <input type="text" th:field="*{name}" id="name">
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+
+    <br/>
+
+    <label for="calories">Калорийность, ккал: </label>
+    <input type="text" th:field="*{calories}" id="calories">
+    <div style="color:red" th:if="${#fields.hasErrors('calories')}" th:errors="*{calories}">Error</div>
+
+    <input type="submit" value="Добавить">
+</form>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список блюд</title>
+</head>
+<body>
+
+
+<div th:each="dish : ${dishes}">
+    <a th:href="@{/dishes/{id}(id=${dish.getId()})}"
+       th:text="${dish.getName()}">value</a>
+</div>
+
+<br/>
+
+<a href="/dishes/create" >Добавить новое блюдо</a>
+
+<br/>
+
+<a href="/main" >Вернуться на главную</a>
+
+
+</body>
+</html>
