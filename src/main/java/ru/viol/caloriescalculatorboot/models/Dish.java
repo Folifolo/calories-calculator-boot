@@ -3,13 +3,14 @@ package ru.viol.caloriescalculatorboot.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "dish")
-public class Dish {
+public class Dish implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,11 +21,13 @@ public class Dish {
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "dish", cascade = CascadeType.ALL)
     private List<IngredientPortion> ingredients;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "dish", cascade = CascadeType.ALL)
+    private List<DishPortion> dishPortions;
 
 
     public double getCalories() {
         double calories = 0;
-        for(IngredientPortion ingredient : ingredients) {
+        for (IngredientPortion ingredient : ingredients) {
             calories += ingredient.getCalories();
         }
         return calories;
@@ -59,8 +62,8 @@ public class Dish {
     }
 
     public IngredientPortion getIngredientByIngredientId(int id) {
-        for(IngredientPortion ingredient : ingredients) {
-            if(ingredient.getIngredientId() == id) {
+        for (IngredientPortion ingredient : ingredients) {
+            if (ingredient.getIngredientId() == id) {
                 return ingredient;
             }
         }
@@ -68,8 +71,8 @@ public class Dish {
     }
 
     public void addIngredient(IngredientPortion ingredientPortion) {
-        for(IngredientPortion ingredient : ingredients) {
-            if(ingredient.getIngredientId() == ingredientPortion.getIngredientId()) {
+        for (IngredientPortion ingredient : ingredients) {
+            if (ingredient.getIngredientId() == ingredientPortion.getIngredientId()) {
                 ingredient.setWeight(ingredient.getWeight() + ingredientPortion.getWeight());
                 return;
             }
@@ -80,8 +83,8 @@ public class Dish {
 
     public void deleteIngredient(int id) {
         IngredientPortion tmp = null;
-        for(IngredientPortion ingredient : ingredients) {
-            if(ingredient.getIngredientId() == id) {
+        for (IngredientPortion ingredient : ingredients) {
+            if (ingredient.getIngredientId() == id) {
                 tmp = ingredient;
             }
         }
@@ -90,18 +93,26 @@ public class Dish {
 
 
     public void copyWeights(Dish dish) {
-        for(int i = 0; i < ingredients.size(); i++) {
+        for (int i = 0; i < ingredients.size(); i++) {
             ingredients.get(i).setWeight(dish.getIngredients().get(i).getWeight());
         }
     }
 
     public void updateIngredientWeight(IngredientPortion ingredientPortion) {
-        for(IngredientPortion ingredient : ingredients) {
-            if(ingredient.getIngredientId() == ingredientPortion.getIngredientId()) {
+        for (IngredientPortion ingredient : ingredients) {
+            if (ingredient.getIngredientId() == ingredientPortion.getIngredientId()) {
                 ingredient.setWeight(ingredientPortion.getWeight());
                 return;
             }
         }
+    }
+
+    public List<DishPortion> getDishPortions() {
+        return dishPortions;
+    }
+
+    public void setDishPortions(List<DishPortion> dishPortions) {
+        this.dishPortions = dishPortions;
     }
 
     @Override
@@ -109,11 +120,11 @@ public class Dish {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Dish dish = (Dish) o;
-        if(ingredients.size() != dish.ingredients.size())
+        if (ingredients.size() != dish.ingredients.size())
             return false;
 
         for (int i = 0; i < ingredients.size(); i++) {
-            if(!ingredients.get(i).equals(dish.ingredients.get(i)))
+            if (!ingredients.get(i).equals(dish.ingredients.get(i)))
                 return false;
         }
         return id == dish.id && name.equals(dish.name);

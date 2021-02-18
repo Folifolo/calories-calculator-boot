@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Календарь</title>
+</head>
+<body>
+
+<a th:href="@{/calendar/day}"
+   th:text="'К выбору дня'"></a>
+
+<table class="table">
+    <tbody>
+    <tr th:each="dishPortion : ${dishPortions}">
+        <td>
+            <a th:href="@{/dishes/{id}(id=${dishPortion.getDishId()})}"
+               th:text="${dishPortion.getDish().getName()}"></a>
+        </td>
+        <td>
+            <p th:text="', ' + ${dishPortion.getCalories()} + ' ккал, '"></p>
+        </td>
+        <td>
+            <p th:text="${dishPortion.printDate()}"></p>
+        </td>
+        <td>
+            <form th:method="DELETE" th:action="@{/calendar/{id}(id=${dishPortion.getId()})}">
+                <input type="submit" value="Удалить">
+            </form>
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+
+<p th:text="'Всего: ' + ${caloriesSum}+ ' ккал'"></p>
+
+<a href="/" >Вернуться на главную</a>
+
+</body>
+</html>

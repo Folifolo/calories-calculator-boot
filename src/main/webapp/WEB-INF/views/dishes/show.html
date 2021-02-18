@@ -30,6 +30,12 @@
     <input type="submit" value="Применить локально">
 </form>
 
+<form th:method="POST" th:action="@{/calendar}" th:object="${dishPortion}">
+    <input type="hidden" th:value="${dish.getCalories()}" name="calories" id="calories">
+    <input type="hidden" th:value="${dish.getId()}" name="dish.id" id="dish.id">
+    <input type="submit" value="Добавить в дневник">
+</form>
+
 <form th:method="GET" th:action="@{/dishes/{id}/update(id=${dish.getId()})}">
     <input type="submit" value="Изменить">
 </form>

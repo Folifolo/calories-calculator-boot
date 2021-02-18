@@ -5,18 +5,19 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 
 @Entity
 @Table(name = "ingredient")
-public class Ingredient {
+public class Ingredient implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-    
+
     @NotEmpty(message = "Название не должно быть пустым")
     @Size(min = 2, max = 30, message = "Название должно содержать больше 2, но меньше 30 символов")
     private String name;

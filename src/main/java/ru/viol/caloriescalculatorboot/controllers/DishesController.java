@@ -2,18 +2,14 @@ package ru.viol.caloriescalculatorboot.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.viol.caloriescalculatorboot.dao.DishesDAO;
 import ru.viol.caloriescalculatorboot.dao.IngredientsDAO;
 import ru.viol.caloriescalculatorboot.models.Dish;
+import ru.viol.caloriescalculatorboot.models.DishPortion;
 import ru.viol.caloriescalculatorboot.models.Ingredient;
 import ru.viol.caloriescalculatorboot.models.IngredientPortion;
-
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/dishes")
@@ -31,7 +27,6 @@ public class DishesController {
     }
 
 
-
     @GetMapping()
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("dishes/index");
@@ -42,13 +37,13 @@ public class DishesController {
     @GetMapping("/{id}")
     public ModelAndView show(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView("redirect:/dishes/temp");
-        tmpDish = (Dish)dishesDAO.show(id);
+        tmpDish = (Dish) dishesDAO.show(id);
         System.out.println(tmpDish);
         return modelAndView;
     }
 
     @GetMapping("/temp")
-    public ModelAndView showTemp() {
+    public ModelAndView showTemp(@ModelAttribute("dishPortion") DishPortion dishPortion) {
         ModelAndView modelAndView = new ModelAndView("dishes/show");
         modelAndView.addObject("dish", tmpDish);
         return modelAndView;
@@ -56,12 +51,12 @@ public class DishesController {
 
     @PostMapping("/{id}/ingredient")
     public ModelAndView addIngredient(@ModelAttribute("ingredientPortion") IngredientPortion ingredientPortion,
-                                @PathVariable("id") int id) {
+                                      @PathVariable("id") int id) {
         IngredientPortion tmp = new IngredientPortion();
-        ModelAndView modelAndView = new ModelAndView("redirect:/dishes/"+ id +"/update");
-        Dish dish = (Dish)dishesDAO.show(id);
+        ModelAndView modelAndView = new ModelAndView("redirect:/dishes/" + id + "/update");
+        Dish dish = (Dish) dishesDAO.show(id);
         tmp.setWeight(ingredientPortion.getWeight());
-        tmp.setIngredient((Ingredient)ingredientsDAO.show(ingredientPortion.getIngredientId()));
+        tmp.setIngredient((Ingredient) ingredientsDAO.show(ingredientPortion.getIngredientId()));
         tmp.setDish(dish);
         dishesDAO.addIngredient(dish.getId(), tmp);
         //dishesDAO.update(id, dish);
@@ -70,8 +65,8 @@ public class DishesController {
 
     @DeleteMapping("/{did}/{iid}")
     public ModelAndView deleteIngredient(@PathVariable("did") int did, @PathVariable("iid") int iid) {
-        ModelAndView modelAndView = new ModelAndView("redirect:/dishes/"+ did+ "/update");
-        Dish dish = (Dish)dishesDAO.show(did);
+        ModelAndView modelAndView = new ModelAndView("redirect:/dishes/" + did + "/update");
+        Dish dish = (Dish) dishesDAO.show(did);
         dish.deleteIngredient(iid);
         dishesDAO.update(did, dish);
         return modelAndView;
@@ -86,8 +81,8 @@ public class DishesController {
 
 
     @PatchMapping("/{id}")
-    public ModelAndView updateName(@ModelAttribute("dish") Dish dish,@PathVariable("id") int id) {
-        ModelAndView modelAndView = new ModelAndView("redirect:/dishes/"+id+"/update");
+    public ModelAndView updateName(@ModelAttribute("dish") Dish dish, @PathVariable("id") int id) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/dishes/" + id + "/update");
 
         dishesDAO.updateName(id, dish);
         return modelAndView;
@@ -111,7 +106,7 @@ public class DishesController {
     @PostMapping()
     public ModelAndView create(@ModelAttribute("dish") Dish dish) {
         ModelAndView modelAndView = new ModelAndView("redirect:/dishes");
-        for(IngredientPortion ingredientPortion : dish.getIngredients()) {
+        for (IngredientPortion ingredientPortion : dish.getIngredients()) {
             ingredientPortion.setDish(dish);
             ingredientPortion.setIngredient((Ingredient) ingredientsDAO.show(ingredientPortion.getIngredientId()));
         }
@@ -131,10 +126,10 @@ public class DishesController {
 
     @PatchMapping("/{id}/ingredient")
     public ModelAndView updateIngredient(@ModelAttribute("ingredientP") IngredientPortion ingredientPortion,
-                                @PathVariable("id") int id) {
+                                         @PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView("redirect:/dishes/{id}/update");
         System.out.println(ingredientPortion);
-        Dish dish = (Dish)dishesDAO.show(id);
+        Dish dish = (Dish) dishesDAO.show(id);
         System.out.println(123);
         dish.updateIngredientWeight(ingredientPortion);
         dishesDAO.update(id, dish);
@@ -158,7 +153,7 @@ public class DishesController {
 
     @GetMapping("/{id}/update")
     public ModelAndView update(@ModelAttribute("ingredientPortion") IngredientPortion ingredientPortion,
-                         @PathVariable("id") int id) {
+                               @PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView("dishes/update");
         modelAndView.addObject("dish", dishesDAO.show(id));
         modelAndView.addObject("ingredients", ingredientsDAO.index());

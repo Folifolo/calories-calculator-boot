@@ -45,7 +45,7 @@ public class JdbcTemplateDishesDAO implements DishesDAO {
         jdbcTemplate.update("UPDATE dish SET name=? WHERE id=?",
                 dish.getName(), id);
         jdbcTemplate.update("DELETE FROM dish_ingredient WHERE dish_id=?", id);
-        for(IngredientPortion ingredient : dish.getIngredients())
+        for (IngredientPortion ingredient : dish.getIngredients())
             jdbcTemplate.update("INSERT INTO dish_ingredient(dish_id, ingredient_id, weight) VALUES (?, ?, ?)",
                     id, ingredient.getIngredientId(), ingredient.getWeight());
     }
@@ -60,7 +60,7 @@ public class JdbcTemplateDishesDAO implements DishesDAO {
         System.out.println(dish);
         int id = jdbcTemplate.queryForObject("INSERT INTO dish(name) VALUES(?) RETURNING id",
                 new IntegerMapper(), dish.getName());
-        for(IngredientPortion ingredient : dish.getIngredients())
+        for (IngredientPortion ingredient : dish.getIngredients())
             jdbcTemplate.update("INSERT INTO dish_ingredient(dish_id, ingredient_id, weight) VALUES (?, ?, ?)",
                     id, ingredient.getIngredientId(), ingredient.getWeight());
     }

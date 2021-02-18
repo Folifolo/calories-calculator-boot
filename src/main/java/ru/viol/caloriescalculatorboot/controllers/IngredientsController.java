@@ -4,7 +4,6 @@ package ru.viol.caloriescalculatorboot.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,9 +45,9 @@ public class IngredientsController {
 
     @PostMapping()
     public ModelAndView create(@ModelAttribute("ingredient") @Valid Ingredient ingredient,
-                         BindingResult bindingResult) {
+                               BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView("redirect:/ingredients");
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             modelAndView.setViewName("ingredients/new");
             return modelAndView;
         }
@@ -58,9 +57,9 @@ public class IngredientsController {
 
     @PatchMapping("/{id}")
     public ModelAndView update(@ModelAttribute("ingredient") @Valid Ingredient ingredient,
-                         BindingResult bindingResult, @PathVariable("id") int id) {
+                               BindingResult bindingResult, @PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView("redirect:/ingredients");
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             modelAndView.setViewName("ingredients/" + id);
             return modelAndView;
         }

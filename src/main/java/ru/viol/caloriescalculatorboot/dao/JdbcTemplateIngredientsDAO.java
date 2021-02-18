@@ -10,7 +10,7 @@ import ru.viol.caloriescalculatorboot.models.Ingredient;
 
 @Component
 @Qualifier("jdbcTemplateIngredient")
-public class JdbcTemplateIngredientsDAO implements  IngredientsDAO{
+public class JdbcTemplateIngredientsDAO implements IngredientsDAO {
 
 
     private final JdbcTemplate jdbcTemplate;

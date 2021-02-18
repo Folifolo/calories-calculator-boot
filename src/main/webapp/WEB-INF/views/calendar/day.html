@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Дни</title>
+</head>
+<body>
+
+<div th:each="date : ${dates}">
+    <a th:href="@{/calendar/day/{num}(num=${date})}"
+       th:text="${date}">value</a>
+</div>
+
+<a href="/" >Вернуться на главную</a>
+
+</body>
+</html>

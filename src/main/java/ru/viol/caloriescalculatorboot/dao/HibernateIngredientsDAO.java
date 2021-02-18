@@ -10,7 +10,7 @@ import java.util.List;
 
 @Component
 @Qualifier("hibernateIngredient")
-public class HibernateIngredientsDAO implements IngredientsDAO{
+public class HibernateIngredientsDAO implements IngredientsDAO {
     @Override
     public Object index() {
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -63,7 +63,6 @@ public class HibernateIngredientsDAO implements IngredientsDAO{
         session.getTransaction().commit();
         session.close();
     }
-
 
 
 }

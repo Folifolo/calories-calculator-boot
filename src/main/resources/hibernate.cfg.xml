@@ -13,5 +13,6 @@
         <mapping class="ru.viol.caloriescalculatorboot.models.Ingredient"></mapping>
         <mapping class="ru.viol.caloriescalculatorboot.models.Dish"></mapping>
         <mapping class="ru.viol.caloriescalculatorboot.models.IngredientPortion"></mapping>
+        <mapping class="ru.viol.caloriescalculatorboot.models.DishPortion"></mapping>
     </session-factory>
 </hibernate-configuration>

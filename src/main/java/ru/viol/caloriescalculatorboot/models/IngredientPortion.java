@@ -4,11 +4,12 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "dish_ingredient")
-public class IngredientPortion {
+public class IngredientPortion implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,12 +18,12 @@ public class IngredientPortion {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @Fetch(FetchMode.JOIN)
-    @JoinColumn(name="ingredient_id", nullable=false)
+    @JoinColumn(name = "ingredient_id", nullable = false)
     private Ingredient ingredient;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
-    @JoinColumn(name="dish_id", nullable=false)
+    @JoinColumn(name = "dish_id", nullable = false)
     private Dish dish;
 
     @Column(name = "weight")
@@ -69,7 +70,7 @@ public class IngredientPortion {
     }
 
     public double getCalories() {
-        return ingredient.getCalories()*weight*0.01;
+        return ingredient.getCalories() * weight * 0.01;
     }
 
     public int getIngredientId() {
