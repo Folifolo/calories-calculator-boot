@@ -8,8 +8,6 @@ import ru.viol.caloriescalculatorboot.dao.DishesDAO;
 import ru.viol.caloriescalculatorboot.dao.IngredientsDAO;
 import ru.viol.caloriescalculatorboot.models.Dish;
 import ru.viol.caloriescalculatorboot.models.DishPortion;
-import ru.viol.caloriescalculatorboot.models.Ingredient;
-import ru.viol.caloriescalculatorboot.models.IngredientPortion;
 
 @RestController
 @RequestMapping("/dishes")
@@ -22,7 +20,7 @@ public class TempDishController {
 
     @Autowired
     public TempDishController(@Qualifier("hibernateDish") DishesDAO dishesDAO,
-                            @Qualifier("hibernateIngredient") IngredientsDAO ingredientsDAO) {
+                              @Qualifier("hibernateIngredient") IngredientsDAO ingredientsDAO) {
         this.dishesDAO = dishesDAO;
         this.ingredientsDAO = ingredientsDAO;
     }
@@ -31,7 +29,6 @@ public class TempDishController {
     public ModelAndView show(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView("redirect:/dishes/temp");
         tmpDish = (Dish) dishesDAO.show(id);
-        System.out.println(tmpDish);
         return modelAndView;
     }
 
@@ -39,21 +36,6 @@ public class TempDishController {
     public ModelAndView showTemp(@ModelAttribute("dishPortion") DishPortion dishPortion) {
         ModelAndView modelAndView = new ModelAndView("dishes/show");
         modelAndView.addObject("dish", tmpDish);
-        return modelAndView;
-    }
-
-    @GetMapping("/create")
-    public ModelAndView eraseTemp() {
-        ModelAndView modelAndView = new ModelAndView("redirect:/dishes/new");
-        tmpDish = new Dish();
-        return modelAndView;
-    }
-
-    @GetMapping("/new")
-    public ModelAndView newDish(@ModelAttribute("ingredientPortion") IngredientPortion ingredientPortion) {
-        ModelAndView modelAndView = new ModelAndView("dishes/new");
-        modelAndView.addObject("dish", tmpDish);
-        modelAndView.addObject("ingredients", ingredientsDAO.index());
         return modelAndView;
     }
 
@@ -65,16 +47,16 @@ public class TempDishController {
     }
 
     @DeleteMapping("/temp/{id}")
-    public ModelAndView deleteTmpIngredient(@PathVariable("id") int id) {
+    public ModelAndView deleteTempIngredient(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView("redirect:/dishes/new");
-        tmpDish.deleteIngredient(id);
+        tmpDish.deleteIngredientPortionByIngredientId(id);
         return modelAndView;
     }
 
     @PatchMapping("/temp/weight")
     public ModelAndView updateTempWeight(@ModelAttribute("dish") Dish dish) {
         ModelAndView modelAndView = new ModelAndView("redirect:/dishes/temp");
-        if(dish.getCookedWeight() <= tmpDish.getRawWeight())
+        if (dish.getCookedWeight() <= tmpDish.getRawWeight())
             tmpDish.setCookedWeight(dish.getCookedWeight());
         return modelAndView;
     }

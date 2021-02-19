@@ -75,7 +75,7 @@ public class HibernateDishesDAO implements DishesDAO{
         session.getTransaction().commit();
         session.close();
 
-        return dish.getIngredientByIngredientId(iid);
+        return dish.getIngredientPortionByIngredientId(iid);
     }
 
     @Override

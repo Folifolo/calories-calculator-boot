@@ -12,7 +12,6 @@ import ru.viol.caloriescalculatorboot.models.Dish;
 import ru.viol.caloriescalculatorboot.models.Ingredient;
 import ru.viol.caloriescalculatorboot.models.IngredientPortion;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HibernateDishesDAOTest {
@@ -122,7 +121,7 @@ public class HibernateDishesDAOTest {
         dishesDAO.addIngredient(dish.getId(), ingredientPortion);
 
         Dish dish1 = (Dish) dishesDAO.show(dish.getId());
-        IngredientPortion ingredientPortion1 = dish1.getIngredientByIngredientId(ingredientPortion.getIngredientId());
+        IngredientPortion ingredientPortion1 = dish1.getIngredientPortionByIngredientId(ingredientPortion.getIngredientId());
 
         Assert.assertEquals(ingredientPortion, ingredientPortion1);
 
@@ -144,7 +143,7 @@ public class HibernateDishesDAOTest {
         dishesDAO.addIngredient(dish.getId(), ingredientPortion2);
 
         Dish dish1 = (Dish) dishesDAO.show(dish.getId());
-        IngredientPortion ingredientPortion = dish1.getIngredientByIngredientId(ingredientPortion2.getIngredientId());
+        IngredientPortion ingredientPortion = dish1.getIngredientPortionByIngredientId(ingredientPortion2.getIngredientId());
 
         Assert.assertEquals(ingredientPortion2, ingredientPortion);
 

@@ -30,6 +30,18 @@ public class DishPortion {
     @Transient
     private double dishCalories;
 
+    public void calculateCaloriesOnWeight() {
+        if (dishCalories == 0)
+            setDishCalories();
+        calories = dishCalories * (cookedWeight / (double) dish.getCookedWeight());
+    }
+
+    public String printDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat(
+                "dd-MM-yyyy");
+        return sdf.format(date);
+    }
+
     public double getDishCalories() {
         return dishCalories;
     }
@@ -48,12 +60,6 @@ public class DishPortion {
 
     public void setCookedWeight(int cookedWeight) {
         this.cookedWeight = cookedWeight;
-    }
-
-    public void calculateCaloriesOnWeight() {
-        if(dishCalories==0)
-            setDishCalories();
-        calories = dishCalories*(cookedWeight/(double)dish.getCookedWeight());
     }
 
     public int getId() {
@@ -78,12 +84,6 @@ public class DishPortion {
 
     public Date getDate() {
         return date;
-    }
-
-    public String printDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat(
-                "dd-MM-yyyy");
-        return sdf.format(date);
     }
 
     public void setDate(Date date) {

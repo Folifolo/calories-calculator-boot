@@ -70,7 +70,7 @@ public class HibernateDishPortionsDAO implements DishPortionsDAO {
     public Object indexByDate(Date date) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        List<DishPortion> list = session.createQuery("from DishPortion where date='"+date+ "'").list();
+        List<DishPortion> list = session.createQuery("from DishPortion where date='" + date + "'").list();
         session.getTransaction().commit();
         session.close();
 

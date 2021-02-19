@@ -44,8 +44,7 @@ public class IngredientsController {
 
     @GetMapping("/new")
     public ModelAndView newIngredient(@ModelAttribute("ingredient") Ingredient ingredient) {
-        ModelAndView modelAndView = new ModelAndView("ingredients/new");
-        return modelAndView;
+        return new ModelAndView("ingredients/new");
     }
 
     @PostMapping()
@@ -83,7 +82,6 @@ public class IngredientsController {
     public ModelAndView createFromDish(@ModelAttribute("dish") Dish dish) {
         ModelAndView modelAndView = new ModelAndView("redirect:/ingredients");
         Ingredient ingredient = new Ingredient((Dish) dishesDAO.show(dish.getId()));
-
         ingredientsDAO.save(ingredient);
         return modelAndView;
     }

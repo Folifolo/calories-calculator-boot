@@ -27,6 +27,16 @@ public class Dish implements Serializable {
     @Column(name = "weight")
     private int cookedWeight;
 
+    public Dish() {
+        this.ingredients = new ArrayList<>();
+    }
+
+    public Dish(IngredientPortion ingredient) {
+        name = ingredient.getName();
+        ingredients = new ArrayList<>();
+        ingredients.add(ingredient);
+    }
+
 
     public double getCalories() {
         double calories = 0;
@@ -44,22 +54,56 @@ public class Dish implements Serializable {
         return weight;
     }
 
+    public IngredientPortion getIngredientPortionByIngredientId(int id) {
+        for (IngredientPortion ingredient : ingredients) {
+            if (ingredient.getIngredientId() == id) {
+                return ingredient;
+            }
+        }
+        return null;
+    }
+
+    public void addIngredient(IngredientPortion ingredientPortion) {
+        for (IngredientPortion ingredient : ingredients) {
+            if (ingredient.getIngredientId() == ingredientPortion.getIngredientId()) {
+                ingredient.setWeight(ingredient.getWeight() + ingredientPortion.getWeight());
+                return;
+            }
+        }
+        ingredients.add(ingredientPortion);
+    }
+
+    public void deleteIngredientPortionByIngredientId(int id) {
+        IngredientPortion tmp = null;
+        for (IngredientPortion ingredient : ingredients) {
+            if (ingredient.getIngredientId() == id) {
+                tmp = ingredient;
+            }
+        }
+        ingredients.remove(tmp);
+    }
+
+    public void copyWeights(Dish dish) {
+        for (int i = 0; i < ingredients.size(); i++) {
+            ingredients.get(i).setWeight(dish.getIngredients().get(i).getWeight());
+        }
+    }
+
+    public void updateIngredientWeight(IngredientPortion ingredientPortion) {
+        for (IngredientPortion ingredient : ingredients) {
+            if (ingredient.getIngredientId() == ingredientPortion.getIngredientId()) {
+                ingredient.setWeight(ingredientPortion.getWeight());
+                return;
+            }
+        }
+    }
+
     public int getCookedWeight() {
         return cookedWeight;
     }
 
     public void setCookedWeight(int cookedWeight) {
         this.cookedWeight = cookedWeight;
-    }
-
-    public Dish() {
-        this.ingredients = new ArrayList<>();
-    }
-
-    public Dish(IngredientPortion ingredient) {
-        name = ingredient.getName();
-        ingredients = new ArrayList<>();
-        ingredients.add(ingredient);
     }
 
     public int getId() {
@@ -84,52 +128,6 @@ public class Dish implements Serializable {
 
     public List<IngredientPortion> getIngredients() {
         return ingredients;
-    }
-
-    public IngredientPortion getIngredientByIngredientId(int id) {
-        for (IngredientPortion ingredient : ingredients) {
-            if (ingredient.getIngredientId() == id) {
-                return ingredient;
-            }
-        }
-        return null;
-    }
-
-    public void addIngredient(IngredientPortion ingredientPortion) {
-        for (IngredientPortion ingredient : ingredients) {
-            if (ingredient.getIngredientId() == ingredientPortion.getIngredientId()) {
-                ingredient.setWeight(ingredient.getWeight() + ingredientPortion.getWeight());
-                return;
-            }
-        }
-        ingredients.add(ingredientPortion);
-    }
-
-
-    public void deleteIngredient(int id) {
-        IngredientPortion tmp = null;
-        for (IngredientPortion ingredient : ingredients) {
-            if (ingredient.getIngredientId() == id) {
-                tmp = ingredient;
-            }
-        }
-        ingredients.remove(tmp);
-    }
-
-
-    public void copyWeights(Dish dish) {
-        for (int i = 0; i < ingredients.size(); i++) {
-            ingredients.get(i).setWeight(dish.getIngredients().get(i).getWeight());
-        }
-    }
-
-    public void updateIngredientWeight(IngredientPortion ingredientPortion) {
-        for (IngredientPortion ingredient : ingredients) {
-            if (ingredient.getIngredientId() == ingredientPortion.getIngredientId()) {
-                ingredient.setWeight(ingredientPortion.getWeight());
-                return;
-            }
-        }
     }
 
     public List<DishPortion> getDishPortions() {

@@ -117,7 +117,7 @@ public class DishTest {
         IngredientPortion ingredientPortion = new IngredientPortion(ingredient, 50);
         dish.addIngredient(ingredientPortion);
 
-        dish.deleteIngredient(INGREDIENT_ID);
+        dish.deleteIngredientPortionByIngredientId(INGREDIENT_ID);
 
         int ingredientsSize = dish.getIngredients().size();
         Assert.assertEquals(0, ingredientsSize);

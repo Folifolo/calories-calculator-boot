@@ -97,7 +97,9 @@ public class IngredientPortion implements Serializable {
     @Override
     public String toString() {
         return "IngredientPortion{" +
-                "ingredient=" + ingredient +
+                "id=" + id +
+                ", ingredient=" + ingredient +
+                ", dish=" + dish +
                 ", weight=" + weight +
                 '}';
     }

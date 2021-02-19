@@ -31,8 +31,8 @@ public class DishPortionsController {
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("calendar/index");
         List<DishPortion> list = (List<DishPortion>) dishPortionsDAO.index();
-        modelAndView.addObject("dishPortions", list);
         double caloriesSum = list.stream().mapToDouble(DishPortion::getCalories).sum();
+        modelAndView.addObject("dishPortions", list);
         modelAndView.addObject("caloriesSum", caloriesSum);
         return modelAndView;
     }
@@ -42,8 +42,8 @@ public class DishPortionsController {
         Date date = Date.valueOf(strDate);
         ModelAndView modelAndView = new ModelAndView("calendar/index");
         List<DishPortion> list = (List<DishPortion>) dishPortionsDAO.indexByDate(date);
-        modelAndView.addObject("dishPortions", list);
         double caloriesSum = list.stream().mapToDouble(DishPortion::getCalories).sum();
+        modelAndView.addObject("dishPortions", list);
         modelAndView.addObject("caloriesSum", caloriesSum);
         return modelAndView;
     }
@@ -64,6 +64,7 @@ public class DishPortionsController {
         dishPortionsDAO.save(dishPortion);
         return modelAndView;
     }
+
     @DeleteMapping("/{id}")
     public ModelAndView delete(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView("redirect:/calendar");
