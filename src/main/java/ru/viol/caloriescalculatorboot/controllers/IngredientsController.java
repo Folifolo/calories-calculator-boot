@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ru.viol.caloriescalculatorboot.dao.DishesDAO;
 import ru.viol.caloriescalculatorboot.dao.IngredientsDAO;
+import ru.viol.caloriescalculatorboot.models.Dish;
 import ru.viol.caloriescalculatorboot.models.Ingredient;
 
 import javax.validation.Valid;
@@ -17,10 +19,13 @@ import javax.validation.Valid;
 public class IngredientsController {
 
     private final IngredientsDAO ingredientsDAO;
+    private final DishesDAO dishesDAO;
 
     @Autowired
-    public IngredientsController(@Qualifier("hibernateIngredient") IngredientsDAO ingredientsDAO) {
+    public IngredientsController(@Qualifier("hibernateIngredient") IngredientsDAO ingredientsDAO,
+                                 @Qualifier("hibernateDish") DishesDAO dishesDAO) {
         this.ingredientsDAO = ingredientsDAO;
+        this.dishesDAO = dishesDAO;
     }
 
     @GetMapping()
@@ -74,5 +79,13 @@ public class IngredientsController {
         return modelAndView;
     }
 
+    @PostMapping("/dish")
+    public ModelAndView createFromDish(@ModelAttribute("dish") Dish dish) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/ingredients");
+        Ingredient ingredient = new Ingredient((Dish) dishesDAO.show(dish.getId()));
+
+        ingredientsDAO.save(ingredient);
+        return modelAndView;
+    }
 
 }

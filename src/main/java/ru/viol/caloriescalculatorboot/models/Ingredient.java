@@ -27,6 +27,13 @@ public class Ingredient implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ingredient")
     List<IngredientPortion> ingredientPortions;
 
+    public Ingredient() {
+    }
+
+    public Ingredient(Dish dish) {
+        name = dish.getName();
+        calories = (int) dish.getCalories();
+    }
 
     public int getId() {
         return id;

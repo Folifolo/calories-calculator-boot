@@ -56,10 +56,11 @@ public class DishPortionsController {
     }
 
     @PostMapping()
-    public ModelAndView create(@ModelAttribute("dish") DishPortion dishPortion) {
+    public ModelAndView create(@ModelAttribute("dishPortion") DishPortion dishPortion) {
         ModelAndView modelAndView = new ModelAndView("redirect:/calendar");
-        dishPortion.setDish((Dish) dishesDAO.show(dishPortion.getDishId()));
+        dishPortion.calculateCaloriesOnWeight();
         dishPortion.setCurrentDate();
+        dishPortion.setDish((Dish) dishesDAO.show(dishPortion.getDishId()));
         dishPortionsDAO.save(dishPortion);
         return modelAndView;
     }

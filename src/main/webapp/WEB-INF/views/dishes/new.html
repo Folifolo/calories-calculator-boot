@@ -6,22 +6,6 @@
 </head>
 <body>
 
-
-<form th:method="POST" th:action="@{/dishes/temp/ingredient}" th:object="${ingredientPortion}">
-    <label for="ingredient_type">Добавить ингредиент: </label>
-    <select id = ingredient_type name="ingredient_type" th:field="*{ingredient.id}">
-        <option th:each="ingredient_type : ${ingredients} "
-                th:value="${ingredient_type.getId()}"
-                th:text="${ingredient_type.getName()}"
-        >ingredient</option>
-    </select>
-
-    <label for="weight">Weight: </label>
-    <input type="text" th:field="*{weight}" id="weight">
-
-    <input type="submit" value="Добавить">
-</form>
-
 <form th:method="POST" th:action="@{/dishes}" th:object="${dish}">
     <label for="name">Название </label>
     <input type="text" th:field="*{name}" id="name" name="name">

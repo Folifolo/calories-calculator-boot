@@ -18,7 +18,7 @@ public class HibernateDishPortionsDAO implements DishPortionsDAO {
     public Object index() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        List<DishPortion> list = session.createQuery("from DishPortion ").list();
+        List<DishPortion> list = session.createQuery("from DishPortion  order by date desc").list();
         session.getTransaction().commit();
         session.close();
 
@@ -81,7 +81,7 @@ public class HibernateDishPortionsDAO implements DishPortionsDAO {
     public Object indexDays() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        List<Integer> list = session.createQuery("select distinct date from DishPortion").list();
+        List<Integer> list = session.createQuery("select distinct date from DishPortion order by date desc ").list();
         session.getTransaction().commit();
         session.close();
 

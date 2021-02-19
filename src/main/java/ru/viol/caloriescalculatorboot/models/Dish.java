@@ -24,6 +24,9 @@ public class Dish implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "dish", cascade = CascadeType.ALL)
     private List<DishPortion> dishPortions;
 
+    @Column(name = "weight")
+    private int cookedWeight;
+
 
     public double getCalories() {
         double calories = 0;
@@ -33,8 +36,30 @@ public class Dish implements Serializable {
         return calories;
     }
 
+    public int getRawWeight() {
+        int weight = 0;
+        for (IngredientPortion ingredient : ingredients) {
+            weight += ingredient.getWeight();
+        }
+        return weight;
+    }
+
+    public int getCookedWeight() {
+        return cookedWeight;
+    }
+
+    public void setCookedWeight(int cookedWeight) {
+        this.cookedWeight = cookedWeight;
+    }
+
     public Dish() {
         this.ingredients = new ArrayList<>();
+    }
+
+    public Dish(IngredientPortion ingredient) {
+        name = ingredient.getName();
+        ingredients = new ArrayList<>();
+        ingredients.add(ingredient);
     }
 
     public int getId() {

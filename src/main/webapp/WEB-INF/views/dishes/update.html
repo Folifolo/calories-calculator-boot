@@ -63,6 +63,20 @@
 
 <br/>
 
+<form th:method="POST" th:action="@{/ingredients/dish}" th:object="${dish}">
+    <input type="hidden" th:field="*{id}">
+    <input type="submit" value="Сохранить в ингредиенты">
+</form>
+
+<br/>
+
+<form th:method="PATCH" th:action="@{/dishes/{id}/weight(id=${dish.getId()})}" th:object="${dish}">
+    <input type="text" th:field="*{cookedWeight}">
+    <input type="submit" value="Указать вес">
+</form>
+
+<br/>
+
 <form th:method="DELETE" th:action="@{/dishes/{id}(id=${dish.getId()})}">
     <input type="submit" value="Удалить блюдо">
 </form>

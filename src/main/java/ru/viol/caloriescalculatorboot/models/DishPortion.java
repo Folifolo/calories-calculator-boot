@@ -24,6 +24,38 @@ public class DishPortion {
 
     private double calories;
 
+    @Transient
+    private int cookedWeight;
+
+    @Transient
+    private double dishCalories;
+
+    public double getDishCalories() {
+        return dishCalories;
+    }
+
+    public void setDishCalories(double dishCalories) {
+        this.dishCalories = dishCalories;
+    }
+
+    public void setDishCalories() {
+        this.dishCalories = dish.getCalories();
+    }
+
+    public int getCookedWeight() {
+        return cookedWeight;
+    }
+
+    public void setCookedWeight(int cookedWeight) {
+        this.cookedWeight = cookedWeight;
+    }
+
+    public void calculateCaloriesOnWeight() {
+        if(dishCalories==0)
+            setDishCalories();
+        calories = dishCalories*(cookedWeight/(double)dish.getCookedWeight());
+    }
+
     public int getId() {
         return id;
     }
