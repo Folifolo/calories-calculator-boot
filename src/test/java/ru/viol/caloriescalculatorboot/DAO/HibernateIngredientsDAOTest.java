@@ -3,7 +3,7 @@ package ru.viol.caloriescalculatorboot.DAO;
 import org.junit.Assert;
 import org.junit.Test;
 import ru.viol.caloriescalculatorboot.dao.HibernateIngredientsDAO;
-import ru.viol.caloriescalculatorboot.dao.IngredientsDAO;
+import ru.viol.caloriescalculatorboot.dao.interfaces.IngredientsDAO;
 import ru.viol.caloriescalculatorboot.models.Ingredient;
 
 import java.util.List;

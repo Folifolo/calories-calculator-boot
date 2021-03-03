@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import ru.viol.caloriescalculatorboot.dao.interfaces.DishesDAO;
 import ru.viol.caloriescalculatorboot.dao.mappers.DishMapper;
 import ru.viol.caloriescalculatorboot.dao.mappers.IntegerMapper;
 import ru.viol.caloriescalculatorboot.dao.mappers.PortionMapper;

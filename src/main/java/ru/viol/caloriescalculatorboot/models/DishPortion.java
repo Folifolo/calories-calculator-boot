@@ -4,6 +4,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -22,6 +23,7 @@ public class DishPortion {
 
     private Date date;
 
+    @Min(value = 0, message = "Количество калорий не может быть отрицательным")
     private double calories;
 
     @Transient

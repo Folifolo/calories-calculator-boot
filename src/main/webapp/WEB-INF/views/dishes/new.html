@@ -7,29 +7,9 @@
 <body>
 
 <form th:method="POST" th:action="@{/dishes}" th:object="${dish}">
-    <label for="name">Название </label>
+    <label for="name">Название: </label>
     <input type="text" th:field="*{name}" id="name" name="name">
-
-    <table class="table">
-        <tbody>
-        <tr th:each="ingredientPortion, rowStat  : ${dish.getIngredients()}">
-            <td>
-                <p th:text="${ingredientPortion.getName()}">nm</p>
-            </td>
-            <td >
-                <label for="ingredient_weight"></label>
-                <input type="text" th:field="*{ingredients[__${rowStat.index}__].weight}" id="ingredient_weight" name="weight" size="4">
-            </td>
-            <td>
-                <p th:text="' гр., ' + ${ingredientPortion.getCalories()} + ' ккал'">cal</p>
-            </td>
-            <td>
-                <input type="hidden" th:field="*{ingredients[__${rowStat.index}__].ingredient.id}" />
-            </td>
-        </tr>
-        </tbody>
-
-    </table>
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
 
     <input type="submit" value="Создать">
 </form>

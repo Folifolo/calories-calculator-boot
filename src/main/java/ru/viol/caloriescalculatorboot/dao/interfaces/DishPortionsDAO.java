@@ -1,4 +1,4 @@
-package ru.viol.caloriescalculatorboot.dao;
+package ru.viol.caloriescalculatorboot.dao.interfaces;
 
 import org.springframework.stereotype.Component;
 import ru.viol.caloriescalculatorboot.models.DishPortion;

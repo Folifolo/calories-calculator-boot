@@ -4,6 +4,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -27,6 +28,7 @@ public class IngredientPortion implements Serializable {
     private Dish dish;
 
     @Column(name = "weight")
+    @Min(value = 0, message = "Вес ингредиента не может быть отрицательным")
     int weight;
 
     public IngredientPortion(Ingredient ingredient, int weight) {

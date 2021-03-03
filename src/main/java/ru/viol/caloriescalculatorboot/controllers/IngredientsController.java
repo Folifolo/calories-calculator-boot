@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.viol.caloriescalculatorboot.dao.DishesDAO;
-import ru.viol.caloriescalculatorboot.dao.IngredientsDAO;
+import ru.viol.caloriescalculatorboot.dao.interfaces.DishesDAO;
+import ru.viol.caloriescalculatorboot.dao.interfaces.IngredientsDAO;
 import ru.viol.caloriescalculatorboot.models.Dish;
 import ru.viol.caloriescalculatorboot.models.Ingredient;
 

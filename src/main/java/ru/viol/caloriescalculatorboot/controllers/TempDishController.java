@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.viol.caloriescalculatorboot.dao.DishesDAO;
-import ru.viol.caloriescalculatorboot.dao.IngredientsDAO;
+import ru.viol.caloriescalculatorboot.dao.interfaces.DishesDAO;
+import ru.viol.caloriescalculatorboot.dao.interfaces.IngredientsDAO;
 import ru.viol.caloriescalculatorboot.models.Dish;
 import ru.viol.caloriescalculatorboot.models.DishPortion;
 

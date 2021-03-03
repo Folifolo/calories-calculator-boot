@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import ru.viol.caloriescalculatorboot.config.HibernateUtil;
+import ru.viol.caloriescalculatorboot.dao.interfaces.DishesDAO;
 import ru.viol.caloriescalculatorboot.models.Dish;
 import ru.viol.caloriescalculatorboot.models.IngredientPortion;
 
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Component
 @Qualifier("hibernateDish")
-public class HibernateDishesDAO implements DishesDAO{
+public class HibernateDishesDAO implements DishesDAO {
 
     @Override
     public Object index() {
@@ -39,7 +40,6 @@ public class HibernateDishesDAO implements DishesDAO{
     public void update(int id, Dish dish) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        System.out.println(dish);
         session.update(dish);
         session.getTransaction().commit();
         session.close();
@@ -52,7 +52,6 @@ public class HibernateDishesDAO implements DishesDAO{
         session.beginTransaction();
         Dish dish = session.load(Dish.class, id);
         dish.addIngredient(ingredientPortion);
-        session.save(ingredientPortion);
         session.update(dish);
         session.getTransaction().commit();
         session.close();

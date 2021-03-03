@@ -19,7 +19,6 @@ public class Ingredient implements Serializable {
     int id;
 
     @NotEmpty(message = "Название не должно быть пустым")
-    @Size(min = 2, max = 30, message = "Название должно содержать больше 2, но меньше 30 символов")
     private String name;
     @Min(value = 0, message = "Количество калорий не может быть отрицательным")
     private int calories;

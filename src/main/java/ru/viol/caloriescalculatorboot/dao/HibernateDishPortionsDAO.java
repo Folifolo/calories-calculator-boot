@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import ru.viol.caloriescalculatorboot.config.HibernateUtil;
+import ru.viol.caloriescalculatorboot.dao.interfaces.DishPortionsDAO;
 import ru.viol.caloriescalculatorboot.models.DishPortion;
 
 import java.sql.Date;

@@ -6,12 +6,12 @@
 </head>
 <body>
 
-    <form id="updateform" th:method="PATCH" th:action="@{/dishes/{id}(id=${dish.getId()})}" th:object="${dish}">
+<form th:method="PATCH" th:action="@{/dishes/{id}(id=${dish.getId()})}" th:object="${dish}">
     <label for="name">Название: </label>
     <input type="text" th:field="*{name}" id="name" name="name">
+    <input type="submit" value="Сохранить">
     <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
-    <input type="submit" value="Сохранить" form="updateform">
-    </form>
+</form>
 
     <table class="table">
         <tbody>
@@ -34,7 +34,8 @@
             </td>
 
             <td>
-                <form th:method="DELETE" th:action="@{/dishes/{did}/{iid}(did=${dish.getId()}, iid=${ingredientPortion.getIngredientId()})}">
+                <form th:method="DELETE" th:action="@{/dishes/{did}/{iid}
+                (did=${dish.getId()}, iid=${ingredientPortion.getIngredientId()})}">
                     <input type="submit" value="Удалить">
                 </form>
             </td>
@@ -56,9 +57,8 @@
 
     <label for="weight">Вес, гр.: </label>
     <input type="text" th:field="*{weight}" id="weight">
-
-
     <input type="submit" value="Добавить ингредиент">
+    <div style="color:red" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}">Weight error</div>
 </form>
 
 <br/>
@@ -72,7 +72,9 @@
 
 <form th:method="PATCH" th:action="@{/dishes/{id}/weight(id=${dish.getId()})}" th:object="${dish}">
     <input type="text" th:field="*{cookedWeight}">
+    <input type="hidden" th:field="*{name}">
     <input type="submit" value="Указать вес">
+    <div style="color:red" th:if="${#fields.hasErrors('cookedWeight')}" th:errors="*{cookedWeight}">Weight error</div>
 </form>
 
 <br/>
