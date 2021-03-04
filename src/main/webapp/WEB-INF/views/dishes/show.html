@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<p th:text="${dish.getName() + ', ' + dish.getCalories() + ' ккал'}">VALUE</p>
+<p th:text="${dish.getName() + ', ' + dish.getCalories() + ' ккал (локальная копия)'}">VALUE</p>
 
 <form th:method="PATCH" th:action="@{/dishes/temp}" th:object="${dish}">
     <table class="table">
@@ -19,7 +19,7 @@
             <td >
                 <label for="ingredient_weight"></label>
                 <input type="text" th:field="*{ingredients[__${rowStat.index}__].weight}"
-                       id="ingredient_weight" name="weight" size="4">
+                       id="ingredient_weight" name="weight" size="2">
             </td>
             <td>
                 <p th:text="' гр., ' + ${ingredientPortion.getCalories()} + ' ккал'">cal</p>
@@ -28,30 +28,38 @@
         </tbody>
 
     </table>
-    <input type="submit" value="Применить локально">
+    <input type="submit" value="Применить веса ингредиентов локально">
 </form>
 
 
-<form th:method="GET" th:action="@{/dishes/{id}/update(id=${dish.getId()})}">
-    <input type="submit" value="Изменить">
-</form>
-
-</br>
+<br/>
 
 <form th:method="PATCH" th:action="@{/dishes/temp/weight}" th:object="${dish}">
-    <input type="text" th:field="*{cookedWeight}" size="4">
-    <input type="submit" value="Указать вес">
+    <input type="text" th:field="*{cookedWeight}" size="2">
+    <input type="submit" value="Указать вес готового блюда">
 </form>
 
+<br/>
+
 <form th:method="POST" th:action="@{/calendar}" th:object="${dishPortion}">
+    <input type="submit" value="Добавить">
+    <p style="display:inline" th:text="'порцию весом'">cal</p>
     <input type="hidden" th:value="${dish.getCalories()}" name="dishCalories" id="dishCalories">
     <input type="hidden" th:value="${dish.getId()}" name="dish.id" id="dish.id">
     <input type="hidden" th:value="${dish.getCookedWeight()}" name="dish.cookedWeight" id="dish.cookedWeight">
-    <input type="text" th:field="*{cookedWeight}" size="4">
-    <input type="submit" value="Добавить в дневник">
+    <input type="text" th:field="*{cookedWeight}" size="2">
+    <p style="display:inline" th:text="'гр. в дневник'">cal</p>
 </form>
 
+<br/>
 
+<form th:method="GET" th:action="@{/dishes/{id}/update(id=${dish.getId()})}">
+    <input type="submit" value="Изменить блюдо">
+</form>
+
+<br/>
+
+<a href="/dishes" >К списку блюд</a>
 
 </body>
 </html>

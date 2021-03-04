@@ -14,11 +14,13 @@
     <br/>
 
     <label for="calories">Калорийность, ккал: </label>
-    <input type="text" th:field="*{calories}" id="calories">
+    <input type="text" th:field="*{calories}" id="calories" size="4">
     <div style="color:red" th:if="${#fields.hasErrors('calories')}" th:errors="*{calories}">Error</div>
 
     <input type="submit" value="Добавить">
 </form>
+
+<a href="/ingredients" >К списку ингредиентов</a>
 
 </body>
 </html>

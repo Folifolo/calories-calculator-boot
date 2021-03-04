@@ -9,7 +9,7 @@
 <form th:method="PATCH" th:action="@{/dishes/{id}(id=${dish.getId()})}" th:object="${dish}">
     <label for="name">Название: </label>
     <input type="text" th:field="*{name}" id="name" name="name">
-    <input type="submit" value="Сохранить">
+    <input type="submit" value="изменить название">
     <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
 </form>
 
@@ -23,10 +23,10 @@
                 <form th:method="PATCH" th:action="@{/dishes/{id}/ingredient(id=${dish.getId()})}"
                       th:object="${ingredientPortion}">
                     <label for="ingredient_weight"></label>
-                    <input type="text" th:value="*{weight}" id="ingredient_weight" name="weight" size="4">
+                    <input type="text" th:value="*{weight}" id="ingredient_weight" name="weight" size="2">
 
                     <input type="hidden" th:value="*{ingredient.id}" name="ingredient.id" />
-                    <input type="submit" value="Изменить">
+                    <input type="submit" value="изменить вес">
                 </form>
             </td>
             <td>
@@ -36,7 +36,7 @@
             <td>
                 <form th:method="DELETE" th:action="@{/dishes/{did}/{iid}
                 (did=${dish.getId()}, iid=${ingredientPortion.getIngredientId()})}">
-                    <input type="submit" value="Удалить">
+                    <input type="submit" value="Удалить ингредиент">
                 </form>
             </td>
         </tr>
@@ -47,7 +47,7 @@
 
 
 <form th:method="POST" th:action="@{/dishes/{id}/ingredient(id=${dish.getId()})}" th:object="${ingredientPortion}">
-    <label for="ingredient_type">Добавить ингредиент: </label>
+    <input type="submit" value="Добавить ингредиент ">
     <select id = ingredient_type name="ingredient_type" th:field="*{ingredient.id}">
         <option th:each="ingredient_type : ${ingredients} "
                 th:value="${ingredient_type.getId()}"
@@ -55,26 +55,26 @@
         >ingredient</option>
     </select>
 
-    <label for="weight">Вес, гр.: </label>
-    <input type="text" th:field="*{weight}" id="weight">
-    <input type="submit" value="Добавить ингредиент">
+    <label for="weight">весом </label>
+    <input type="text" th:field="*{weight}" id="weight" size="2">
+    <p style="display:inline" th:text="'гр.'">cal</p>
     <div style="color:red" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}">Weight error</div>
+</form>
+
+<br/>
+
+<form th:method="PATCH" th:action="@{/dishes/{id}/weight(id=${dish.getId()})}" th:object="${dish}">
+    <input type="text" th:field="*{cookedWeight}" size="2">
+    <input type="hidden" th:field="*{name}">
+    <input type="submit" value="Указать вес готового блюда">
+    <div style="color:red" th:if="${#fields.hasErrors('cookedWeight')}" th:errors="*{cookedWeight}">Weight error</div>
 </form>
 
 <br/>
 
 <form th:method="POST" th:action="@{/ingredients/dish}" th:object="${dish}">
     <input type="hidden" th:field="*{id}">
-    <input type="submit" value="Сохранить в ингредиенты">
-</form>
-
-<br/>
-
-<form th:method="PATCH" th:action="@{/dishes/{id}/weight(id=${dish.getId()})}" th:object="${dish}">
-    <input type="text" th:field="*{cookedWeight}">
-    <input type="hidden" th:field="*{name}">
-    <input type="submit" value="Указать вес">
-    <div style="color:red" th:if="${#fields.hasErrors('cookedWeight')}" th:errors="*{cookedWeight}">Weight error</div>
+    <input type="submit" value="Сохранить блюдо как ингредиент">
 </form>
 
 <br/>

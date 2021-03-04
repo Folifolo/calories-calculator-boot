@@ -14,19 +14,18 @@
     <br/>
 
     <label for="calories">Калорийность, ккал: </label>
-    <input type="text" th:field="*{calories}" id="calories">
+    <input type="text" th:field="*{calories}" id="calories" size="2">
     <div style="color:red" th:if="${#fields.hasErrors('calories')}" th:errors="*{calories}">Calories error</div>
-
-    <input type="submit" value="Сохранить изменения!">
+    <br/>
+    <input type="submit" value="Сохранить изменения">
 </form>
 
-<br/>
 
 <form th:method="DELETE" th:action="@{/ingredients/{id}(id=${ingredient.getId()})}">
     <input type="submit" value="Удалить"/>
-
-
 </form>
-</form>
+
+<a href="/ingredients" >К списку ингредиентов</a>
+
 </body>
 </html>
