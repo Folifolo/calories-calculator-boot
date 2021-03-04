@@ -13,7 +13,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "ingredient")
 public class Ingredient implements Serializable {
-
+    static final int INGREDIENT_WEIGHT = 100;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
@@ -31,7 +31,7 @@ public class Ingredient implements Serializable {
 
     public Ingredient(Dish dish) {
         name = dish.getName();
-        calories = (int) dish.getCalories();
+        calories = (int) (dish.getCalories()/dish.getCookedWeight()*INGREDIENT_WEIGHT);
     }
 
     public int getId() {
